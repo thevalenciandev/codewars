@@ -10,26 +10,15 @@ sum = 10
 
 
 def sum_pairs(ints, sum):
-    left_index = len(ints)
-    right_index = len(ints)
-    found_sum = False
-    i = 0
-    j = 1
-    while i < right_index:
-        while j < right_index:
-            if ints[i] + ints[j] == sum:
-                if j < right_index:
-                    left_index = i
-                    right_index = j
-                    found_sum = True
-            j += 1
-        i += 1
-        j = i + 1
-
-    if found_sum:
-        return [ints[left_index], ints[right_index]]
-    else:
-        return None
+    processed_ints = set()
+    processed_ints.add(ints[0])
+    for i in range(1, len(ints)):
+        int_needed = sum - ints[i]
+        if int_needed in processed_ints:
+            return [int_needed, ints[i]]
+        else:
+            processed_ints.add(ints[i])
+    return None
 
 
 print(sum_pairs(ints, sum))
