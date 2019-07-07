@@ -1,5 +1,6 @@
 # 6 kyu: https://www.codewars.com/kata/football-yellow-and-red-cards/train/python
 import re
+import pytest
 
 
 def men_still_standing(cards):
@@ -25,5 +26,6 @@ def test_no_cards_given():
     assert men_still_standing([]) == (11, 11)
 
 
-def test_two_yellow_cards_for_same_player_in_team_A():
-    assert men_still_standing(['A1Y', 'A1Y']) == (10, 11)
+@pytest.mark.parametrize('cards, expected_result', [(['A1Y', 'A1Y'], (10, 11))])
+def test_two_yellow_cards_for_same_player_in_same_team(cards, expected_result):
+    assert men_still_standing(cards) == expected_result
