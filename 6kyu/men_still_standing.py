@@ -41,6 +41,7 @@ def test_two_yellow_cards_for_same_player_in_same_team(cards, expected_result):
 
 
 @pytest.mark.parametrize('cards, expected_result', [(['A11R'], (10, 11)),
-                                                    (['B11R'], (11, 10))])
-def test_red_cards(cards, expected_result):
+                                                    (['B11R'], (11, 10)),
+                                                    (['A11R', 'B11R'], (10, 10))])
+def test_red_cards_only(cards, expected_result):
     assert men_still_standing(cards) == expected_result
