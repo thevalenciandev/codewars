@@ -19,6 +19,9 @@ def men_still_standing(cards):
                 a_players_left = update_referee_notebook(a_players_left, a_team, int(player), card_color)
             else:
                 b_players_left = update_referee_notebook(b_players_left, b_team, int(player), card_color)
+            if a_players_left == 6 or b_players_left == 6:
+                return a_players_left, b_players_left
+
         return a_players_left, b_players_left
 
 
@@ -44,4 +47,10 @@ def test_two_yellow_cards_for_same_player_in_same_team(cards, expected_result):
                                                     (['B11R'], (11, 10)),
                                                     (['A11R', 'B11R'], (10, 10))])
 def test_red_cards_only(cards, expected_result):
+    assert men_still_standing(cards) == expected_result
+
+
+@pytest.mark.parametrize('cards, expected_result', [(['A11R', 'A10R', 'A9R', 'A8R', 'A7R', 'A6R', 'A5R'], (6, 11)),
+                                                    (['B11R', 'B10R', 'B9R', 'B8R', 'B7R', 'B6R', 'B5R'], (11, 6))])
+def test_red_cards_are_capped_to_six(cards, expected_result):
     assert men_still_standing(cards) == expected_result
