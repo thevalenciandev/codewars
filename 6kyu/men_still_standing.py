@@ -27,6 +27,8 @@ def men_still_standing(cards):
 
 def update_referee_notebook(players_left, team, player, card_color):
     index = player - 1
+    if team[index] == 2:  # ignore red card if player is already out
+        return players_left
     team[index] = team[index] + (1 if card_color == 'Y' else 2)
     if team[index] >= 2:
         players_left -= 1
@@ -46,6 +48,12 @@ def test_two_yellow_cards_for_same_player_in_same_team(cards, expected_result):
 @pytest.mark.parametrize('cards, expected_result', [(['A1Y', 'A1R'], (10, 11)),
                                                     (['B1Y', 'B1R'], (11, 10))])
 def test_yellow_then_red_for_same_player_is_red(cards, expected_result):
+    assert men_still_standing(cards) == expected_result
+
+
+@pytest.mark.parametrize('cards, expected_result', [(['A1R', 'A1R', 'A1R'], (10, 11)),
+                                                    (['B1R', 'B1R', 'B1R'], (11, 10))])
+def test_more_than_one_red_for_same_player_is_ignored(cards, expected_result):
     assert men_still_standing(cards) == expected_result
 
 
