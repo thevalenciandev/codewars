@@ -14,17 +14,17 @@ def men_still_standing(cards):
         card_extractor = re.compile(r'([AB])(\d+)([YR])')
         for card in cards:
             match = card_extractor.match(card)
-            team, player, color = match.groups()
+            team, player, card_color = match.groups()
             if team == 'A':
-                a_players_left = update_referee_notebook(a_players_left, a_team, int(player))
+                a_players_left = update_referee_notebook(a_players_left, a_team, int(player), card_color)
             else:
-                b_players_left = update_referee_notebook(b_players_left, b_team, int(player))
+                b_players_left = update_referee_notebook(b_players_left, b_team, int(player), card_color)
         return a_players_left, b_players_left
 
 
-def update_referee_notebook(players_left, team, player):
+def update_referee_notebook(players_left, team, player, card_color):
     index = player - 1
-    team[index] = team[index] + 1
+    team[index] = team[index] + (1 if card_color == 'Y' else 2)
     if team[index] == 2:
         players_left -= 1
     return players_left
@@ -38,3 +38,7 @@ def test_no_cards_given():
                                                     (['B1Y', 'B1Y'], (11, 10))])
 def test_two_yellow_cards_for_same_player_in_same_team(cards, expected_result):
     assert men_still_standing(cards) == expected_result
+
+
+def test_red_cards():
+    assert men_still_standing(['A11R']) == (10, 11)
