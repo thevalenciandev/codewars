@@ -68,7 +68,3 @@ def test_red_cards_only(cards, expected_result):
                                                     (['B11R', 'B10R', 'B9R', 'B8R', 'B7R', 'B6R', 'B5R'], (11, 6))])
 def test_red_cards_are_capped_to_six(cards, expected_result):
     assert men_still_standing(cards) == expected_result
-
-
-# [ 'B2Y','B9R','B3R','B11Y','B8Y','B5Y','B10Y','B1R','B5Y','B2Y','B7R','B5Y','B7Y','B2Y' ]
-print(men_still_standing(['A6R', 'A7Y', 'A8R', 'A10Y', 'A3Y', 'A9R', 'A8Y', 'A10R', 'A10Y', 'A6R', 'A5Y']))
